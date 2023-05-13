@@ -18,3 +18,52 @@
   width: 90%;
   border-radius: 2%;
 }
+
+/* notification */
+#sync_btn {
+  position: fixed;
+  top: 0px;
+  right: 30px;
+  z-index: 9999;
+}
+
+#update_success_notification {
+  padding: 20px;
+  background-color: #04AA6D;
+  color: white;
+  opacity: 1;
+  font-size: 25px;
+
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  z-index: 9999;
+}
+
+#update_failure_notification {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+  opacity: 1;
+  font-size: 25px;
+
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  z-index: 9999;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
