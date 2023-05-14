@@ -12,14 +12,10 @@ function Updater(props){
           console.log(response);
           if (response.ok) {
             const usn = document.getElementById("update_success_notification");
-            const ufn = document.getElementById("update_failure_notification");
-            if (response.status===200){
-              usn.style.display = "block";
-            } else{
-              ufn.style.display = "block";
-            }
+            usn.style.display = "block";
           } else {
-            throw new Error('Request failed');
+            const ufn = document.getElementById("update_failure_notification");
+            ufn.style.display = "block";
           }
         })
         .catch(error => {
