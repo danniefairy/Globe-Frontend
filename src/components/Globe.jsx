@@ -22,7 +22,25 @@ const Globe = () => {
 
         const years = data.years;
         const images = data.images;
-        console.log(images);
+
+        console.log(years);
+
+        // button
+        const yeatButtonDiv = document.getElementById('yearButton');
+        yeatButtonDiv.innerHTML = '';
+        for (let i = 0; i < years.length; i++) {
+          const year = years[i];
+          const buttonElement = document.createElement('button');
+          buttonElement.textContent = year;
+          buttonElement.setAttribute('class', 'buttonClass');
+
+          // Add onclick function with parameter
+          buttonElement.onclick = function() {
+            handleClick(year);
+          };
+
+          yeatButtonDiv.appendChild(buttonElement);
+        }
 
         // parse images
         const gData = [];
@@ -158,8 +176,8 @@ const Globe = () => {
     fetchData();
   }, [year]);
 
-  const sendRequest = () => {
-    setYear('2019');
+  const handleClick = (parameter) => {
+    setYear(parameter);
 
     // clean up
     globeRef.current.innerHTML = '';
@@ -167,9 +185,7 @@ const Globe = () => {
 
 
   return <div>
-    <button  onClick={sendRequest}>test</button>
-    <button>test</button>
-    <button>test</button>
+    <div id='yearButton'></div>
     <div ref={globeRef} style={{ width: '100%', height: '100vh' }}></div>
   </div>;
 };
