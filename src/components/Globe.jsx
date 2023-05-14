@@ -11,17 +11,22 @@ const server_endpoint = "http://127.0.0.1:5000"
 
 const Globe = () => {
   const globeRef = useRef(null);
+  const [year, setYear] = useState('all');
+  
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const option = 'all';
-        const response = await fetch(server_endpoint+'/api/images/'+option);
+        const response = await fetch(server_endpoint+'/api/images/'+year);
         const data = await response.json();
 
-        // parse data
+        const years = data.years;
+        const images = data.images;
+        console.log(images);
+
+        // parse images
         const gData = [];
-        Object.entries(data).forEach(([city, value]) => {
+        Object.entries(images).forEach(([city, value]) => {
           console.log(city + ': ' + value);
           const meta_data = {};
           meta_data.city = city;
@@ -49,6 +54,8 @@ const Globe = () => {
             el.style.pointerEvents = 'auto'; // make it clickable
             el.onclick = function () {
               const ic = document.getElementById("imageContainer");
+              console.log(d.city);
+              console.log(d.images.length);
               ReactDOM.render(
                 <ImageGallery
                   city={d.city}
@@ -56,6 +63,7 @@ const Globe = () => {
                   server_endpoint={server_endpoint}
                 />
                 , ic);
+  
             };
             return el;
           });
@@ -72,6 +80,8 @@ const Globe = () => {
         const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
         directionalLight.position.set(1, 1, 1); // change light position to see the specularMap's effect
 
+
+        console.log("globeRef " + globeRef.current);
         // Setup renderers
         const renderers = [new THREE.WebGLRenderer(), new CSS2DRenderer()];
         //renderers[0].setClearColor( 0x000000, 0 );
@@ -129,6 +139,7 @@ const Globe = () => {
 
         // Cleanup function
         return () => {
+          globeRef.current = null;
           renderers.forEach(r => {
             r.dispose();
             r.forceContextLoss();
@@ -143,11 +154,24 @@ const Globe = () => {
 
 
     };
-
+    
     fetchData();
-  }, []);
+  }, [year]);
 
-  return <div ref={globeRef} style={{ width: '100%', height: '100vh' }}></div>;
+  const sendRequest = () => {
+    setYear('2019');
+
+    // clean up
+    globeRef.current.innerHTML = '';
+  };
+
+
+  return <div>
+    <button  onClick={sendRequest}>test</button>
+    <button>test</button>
+    <button>test</button>
+    <div ref={globeRef} style={{ width: '100%', height: '100vh' }}></div>
+  </div>;
 };
 
 export default Globe;
