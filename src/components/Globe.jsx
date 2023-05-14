@@ -15,7 +15,8 @@ const Globe = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(server_endpoint+'/api/images');
+        const option = 'all';
+        const response = await fetch(server_endpoint+'/api/images/'+option);
         const data = await response.json();
 
         // parse data
