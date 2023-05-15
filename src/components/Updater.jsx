@@ -12,10 +12,10 @@ function Updater(props){
           console.log(response);
           if (response.ok) {
             const usn = document.getElementById("update_success_notification");
-            usn.style.display = "block";
+            usn.style.display = "inline";
           } else {
             const ufn = document.getElementById("update_failure_notification");
-            ufn.style.display = "block";
+            ufn.style.display = "inline";
           }
         })
         .catch(error => {
@@ -30,20 +30,20 @@ function Updater(props){
       const usn = document.getElementById("update_success_notification");
       usn.style.display = 'none';
       const btn = document.getElementById("sync_btn");
-      btn.style.display = "block";
+      btn.style.display = "inline";
     };
 
     const closeFailureNotification = () => {
       const ufn = document.getElementById("update_failure_notification");
       ufn.style.display = 'none';
       const btn = document.getElementById("sync_btn");
-      btn.style.display = "block";
+      btn.style.display = "inline";
     };
 
     return (
-      <div>
-        <button id="sync_btn" onClick={sendRequest} disabled={loading}>
-          <p>&nbsp; &nbsp; &nbsp; <i class="w3-xlarge fa fa-refresh"></i></p>
+      <div id='updater' style={{ display: "inline"}}>
+        <button id="sync_btn" onClick={sendRequest} disabled={loading} className=' w3-button w3-white w3-border w3-round-large'>
+          <p><i class="w3-xlarge fa fa-refresh"></i></p>
         </button>
   
         <div id="update_success_notification"  style={{ display: "inline", display: "none"}}>

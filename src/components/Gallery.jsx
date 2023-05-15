@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Updater from "./Updater";
 
 function ImageGallery(props) {
   // State to track the visible images
@@ -57,7 +56,6 @@ function ImageGallery(props) {
           <i className="fa fa-map-marker" style={{ font: '24px' }}></i>{' '}
           {props.city}
         </b>
-        <Updater />
       </h1>
       {visibleImages.map((image, index) => (
         <div className="w3-row-padding" key={index}>

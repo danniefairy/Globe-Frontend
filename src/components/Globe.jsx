@@ -6,12 +6,14 @@ import { CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer';
 import ThreeGlobe from 'three-globe';
 import Markers from "./Markers";
 import ImageGallery from "./Gallery";
+import Updater from "./Updater";
 
 const server_endpoint = "http://127.0.0.1:5000"
 
 const Globe = () => {
   const globeRef = useRef(null);
   const [year, setYear] = useState('all');
+  const [btn, setBtn] = useState('all');
   
 
   useEffect(() => {
@@ -21,9 +23,8 @@ const Globe = () => {
         const data = await response.json();
 
         const years = data.years;
+        years.push('all');
         const images = data.images;
-
-        console.log(years);
 
         // button
         const yeatButtonDiv = document.getElementById('yearButton');
@@ -32,7 +33,11 @@ const Globe = () => {
           const year = years[i];
           const buttonElement = document.createElement('button');
           buttonElement.textContent = year;
-          buttonElement.setAttribute('class', 'buttonClass');
+          buttonElement.setAttribute('class', 'year-button w3-button w3-white w3-border w3-round-large');
+
+          if (btn==year){
+            buttonElement.setAttribute("disabled", true);
+          }
 
           // Add onclick function with parameter
           buttonElement.onclick = function() {
@@ -133,7 +138,9 @@ const Globe = () => {
         const camera = new THREE.PerspectiveCamera();
         camera.aspect = canvasContainer.offsetWidth / canvasContainer.offsetHeight;
         camera.updateProjectionMatrix();
-        camera.position.z = 500;
+        camera.position.x = -300;
+        camera.position.y = 200;
+        camera.position.z = 20;
 
         // Add camera controls
         const tbControls = new TrackballControls(camera, renderers[0].domElement);
@@ -177,7 +184,9 @@ const Globe = () => {
   }, [year]);
 
   const handleClick = (parameter) => {
+    setBtn(parameter);
     setYear(parameter);
+    
 
     // clean up
     globeRef.current.innerHTML = '';
@@ -185,7 +194,12 @@ const Globe = () => {
 
 
   return <div>
-    <div id='yearButton'></div>
+    <div class="w3-container">
+      <div id='yearButton' ></div>
+      <Updater />
+    </div>
+
+    
     <div ref={globeRef} style={{ width: '100%', height: '100vh' }}></div>
   </div>;
 };
