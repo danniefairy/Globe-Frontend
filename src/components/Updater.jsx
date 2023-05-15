@@ -7,7 +7,7 @@ function Updater(props){
       setLoading(true);
       const btn = document.getElementById("sync_btn");
       btn.style.display = "none";
-      fetch('http://127.0.0.1:5000/api/sync')
+      fetch('http://192.168.1.71:5000/api/sync')
         .then(response => {
           console.log(response);
           if (response.ok) {
