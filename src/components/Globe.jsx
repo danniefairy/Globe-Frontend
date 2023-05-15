@@ -8,7 +8,7 @@ import Markers from "./Markers";
 import ImageGallery from "./Gallery";
 import Updater from "./Updater";
 
-const server_endpoint = "http://127.0.0.1:5000"
+const server_endpoint = "http://192.168.1.71:5000"//"http://127.0.0.1:5000"
 
 const Globe = () => {
   const globeRef = useRef(null);
