@@ -1,5 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+function showImageModal(imageSrc) {
+  var modal = document.createElement('div');
+  modal.classList.add('fixed', 'inset-0', 'flex', 'items-center', 'justify-center', 'bg-black', 'bg-opacity-80');
+  modal.style.zIndex=9999;
+
+  var modalContent = document.createElement('div');
+  modalContent.classList.add('bg-white', 'sm\:max-w-2xl', 'p-8');
+
+
+  var image = document.createElement('img');
+  image.src = imageSrc;
+  image.classList.add('w-full');
+
+  modalContent.appendChild(image);
+  modal.appendChild(modalContent);
+
+  document.body.appendChild(modal);
+
+  modal.onclick = function() {
+    modal.remove();
+  };
+}
+
 function ImageGallery(props) {
   // State to track the visible images
   const [visibleImages, setVisibleImages] = useState([]);
@@ -71,7 +94,9 @@ function ImageGallery(props) {
             <img
               src={props.server_endpoint + image.url}
               alt="Norway"
-              className="w3-hover-opacity photo"
+              //className="w3-hover-opacity photo"
+              onClick={() => showImageModal(props.server_endpoint + image.url)}
+              class="clickable-image cursor-pointer w3-hover-opacity photo"
             />
           </div>
         </div>
