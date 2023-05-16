@@ -141,12 +141,12 @@ const Globe = () => {
         camera.position.x = -300;
         camera.position.y = 200;
         camera.position.z = 20;
-
+        
         // Add camera controls
         const tbControls = new TrackballControls(camera, renderers[0].domElement);
-        tbControls.minDistance = 5;
-        tbControls.rotateSpeed = 1;
-        tbControls.zoomSpeed = 0.3;
+        tbControls.minDistance =  5
+        tbControls.rotateSpeed = 1
+        tbControls.zoomSpeed = 0.3
 
         // Update pov when camera moves
         Globe.setPointOfView(camera.position, Globe.position);
@@ -160,6 +160,19 @@ const Globe = () => {
           tbControls.update();
           renderers.forEach(r => r.render(scene, camera));
           requestAnimationFrame(animate);
+
+          // Get the distance between the camera and the center of the Earth
+          // 360-100
+          const cameraToCenterDistance = Math.sqrt(
+            camera.position.x ** 2 +
+            camera.position.y ** 2 +
+            camera.position.z ** 2
+          );
+          // dynamically change the control component
+          const ratio = (cameraToCenterDistance-100)/(360-100);
+          tbControls.minDistance = Math.max(0.01, 0.04+(5-0.01)*ratio); // 0.01 5
+          tbControls.rotateSpeed = Math.max(0.01, 0.04+(1-0.01)*ratio); // 0.01 1
+          tbControls.zoomSpeed = Math.max(0.1, 0.1+(0.3-0.1)*ratio);   // 0.1 0.3
         })();
 
         // Cleanup function
